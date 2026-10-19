@@ -1,0 +1,36 @@
+/* Oroboro Press: coming-soon page. Same look as the full site (oroboro-press-site). */
+html, body { margin: 0; background: #FFFFFF; overflow-x: clip; }
+body {
+  color: #1D1D1F; min-height: 100vh; display: flex; flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Figtree", "Helvetica Neue", sans-serif;
+  font-size: 17px; line-height: 1.47; letter-spacing: -0.01em;
+}
+a { color: #0066CC; }
+a:hover { color: #004E9E; }
+.lang { position: absolute; top: 18px; right: 22px; font-size: 14px; color: #1D1D1F; text-decoration: none; }
+main { flex: 1; text-align: center; padding: 72px 22px 64px; }
+.logo { width: 220px; max-width: 60%; height: auto; }
+.tagline { margin: 28px auto 0; max-width: 640px; font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; }
+.sub { margin: 8px auto 0; max-width: 640px; font-size: 21px; color: #6E6E73; }
+.book { margin: 64px auto 0; max-width: 680px; padding: 48px 22px; background: #F5F5F7; border-radius: 28px; }
+.book h1 { margin: 0; font-size: 72px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; }
+.book .line { margin: 8px 0 0; font-size: 26px; line-height: 1.2; }
+.book .when { margin: 10px 0 0; font-size: 19px; color: #6E6E73; }
+.button {
+  display: inline-flex; align-items: center; min-height: 44px; margin-top: 26px; padding: 0 22px;
+  border-radius: 980px; background: #0071E3; color: #FFFFFF; text-decoration: none; font-size: 17px;
+}
+.button:hover { background: #0077ED; color: #FFFFFF; }
+.small { margin: 14px auto 0; max-width: 460px; font-size: 14px; color: #6E6E73; }
+footer { background: #F5F5F7; font-size: 12px; color: #6E6E73; }
+footer div { max-width: 980px; margin: 0 auto; padding: 20px 22px 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+footer a { color: #424245; text-decoration: none; }
+@media (max-width: 640px) {
+  main { padding: 64px 16px 48px; }
+  .lang { right: 16px; }
+  .tagline { font-size: 26px; }
+  .sub { font-size: 18px; }
+  .book { padding: 40px 18px; border-radius: 22px; }
+  .book h1 { font-size: 52px; }
+  .book .line { font-size: 22px; }
+}
