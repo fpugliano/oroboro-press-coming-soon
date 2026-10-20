@@ -30,10 +30,18 @@
 <h1>Crumbs</h1>
 <p class="line">Firenze, l'arte, la memoria. A briciole.</p>
 <p class="when">Il nuovo libro di Nicola Nuti, in eBook e in audiolibro letto dall'autore. Inizio 2027.</p>
-<a class="button" href="mailto:info@oroboropress.com?subject=Avvisami%3A%20Crumbs">Avvisami quando esce</a>
-<p class="small">Mandaci un'email e ti scriveremo una volta sola, quando il libro esce. Nient'altro.</p>
+<form class="signup" action="https://oroboro-signup.fpugliano.workers.dev" method="post" data-ok="Grazie! Ti scriviamo quando esce Crumbs." data-err="Qualcosa non ha funzionato. Riprova, oppure scrivi a info@oroboropress.com." data-bad="Controlla l'indirizzo email.">
+<input type="hidden" name="lang" value="it"><input type="hidden" name="list" value="crumbs">
+<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label class="sr" for="email">Email</label>
+<input id="email" type="email" name="email" required autocomplete="email" placeholder="nome@esempio.it">
+<button class="button" type="submit">Avvisami</button>
+</form>
+<p class="msg" role="status" aria-live="polite"></p>
+<p class="small">Ti scriviamo una volta sola, quando il libro esce. Nient'altro, e non diamo il tuo indirizzo a nessuno.</p>
 </section>
 </main>
 <footer><div><span>Copyright © 2026 Oroboro Press, San Francisco, California.</span><span>Contatti: <a href="mailto:info@oroboropress.com">info@oroboropress.com</a></span></div></footer>
+<script src="/js/signup.js"></script>
 </body>
 </html>

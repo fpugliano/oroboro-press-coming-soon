@@ -1,0 +1,10 @@
+{
+  // Signup endpoint for the "Notify me" form on oroboropress.com
+  "name": "oroboro-signup",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "oroboro-signups", "database_id": "8855cb2c-908f-46f3-a831-8e07dd228463" }
+  ]
+}

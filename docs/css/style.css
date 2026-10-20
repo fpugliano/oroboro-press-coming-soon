@@ -34,3 +34,18 @@ footer a { color: #424245; text-decoration: none; }
   .book h1 { font-size: 52px; }
   .book .line { font-size: 22px; }
 }
+
+/* "Notify me" form */
+.signup { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 26px auto 0; max-width: 440px; }
+.signup input[type=email] {
+  flex: 1 1 220px; min-height: 44px; padding: 0 16px; box-sizing: border-box;
+  border: 1px solid #D2D2D7; border-radius: 12px; background: #FFFFFF; font: inherit; color: #1D1D1F;
+}
+.signup input[type=email]:focus { outline: 2px solid #0071E3; outline-offset: 1px; border-color: #0071E3; }
+.signup .button { margin-top: 0; border: 0; cursor: pointer; font: inherit; }
+.signup .button:disabled { opacity: .6; cursor: default; }
+.sr, .hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.msg { margin: 12px 0 0; font-size: 17px; min-height: 1em; }
+.msg.ok { color: #1D1D1F; font-weight: 600; font-size: 19px; }
+.msg.err { color: #BF4800; }
+.msg:empty { display: none; }
