@@ -1,6 +1,8 @@
 // Stores "Notify me" signups from oroboropress.com in D1.
 // POST /  with JSON {email, lang, list} or a normal form post.
+// http:// too, until GitHub's certificate is in place (and for visitors who type http://)
 const ALLOWED = ["https://oroboropress.com", "https://www.oroboropress.com",
+                 "http://oroboropress.com", "http://www.oroboropress.com",
                  "https://anteprima.oroboropress.com", "http://localhost:8765"];
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
 
