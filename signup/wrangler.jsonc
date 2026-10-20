@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "compatibility_date": "2026-10-01",
   "observability": { "enabled": true },
-  // weekly call that keeps the Brevo key active (Mondays 08:00 UTC); key is the BREVO_KEY secret
+  // Monday 08:00 UTC: weekly subscriber summary to Francesco (also keeps the Brevo key active); key is the BREVO_KEY secret
   "triggers": { "crons": ["0 8 * * 1"] },
   "d1_databases": [
     { "binding": "DB", "database_name": "oroboro-signups", "database_id": "8855cb2c-908f-46f3-a831-8e07dd228463" }

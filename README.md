@@ -15,7 +15,7 @@ The form posts to a small Cloudflare Worker (`signup/`, https://oroboro-signup.f
 3. Brevo adds the address to the list **Crumbs** (id 3, contact field LANGUAGE = it/en) only after the reader clicks
    "Confermo"/"Confirm", then sends them to `/it/grazie/` or `/thanks/`.
 
-A weekly cron call (Mondays) keeps the Brevo API key from expiring after 90 days of inactivity.
+Every Monday at 08:00 UTC a cron run emails fpugliano@gmail.com a summary of the week's new confirmed subscribers (only if there are any); the same call keeps the Brevo API key from expiring after 90 days of inactivity.
 The key is the Worker secret `BREVO_KEY` (replace with `npx wrangler secret put BREVO_KEY` in `signup/`).
 
 Confirmed subscribers: Brevo → Contacts → Lists → Crumbs. Everyone who filled in the form (confirmed or not):
