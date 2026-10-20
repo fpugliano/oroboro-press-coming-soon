@@ -12,7 +12,7 @@ main { flex: 1; text-align: center; padding: 72px 22px 64px; }
 .logo { width: 220px; max-width: 60%; height: auto; }
 .tagline { margin: 28px auto 0; max-width: 640px; font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; }
 .sub { margin: 8px auto 0; max-width: 640px; font-size: 21px; color: #6E6E73; }
-.book { margin: 64px auto 0; max-width: 680px; padding: 48px 22px; background: #F5F5F7; border-radius: 28px; }
+.book { margin: 64px auto 0; max-width: 780px; padding: 48px 22px; background: #F5F5F7; border-radius: 28px; }
 .book h1 { margin: 0; font-size: 72px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; }
 .book .line { margin: 8px 0 0; font-size: 26px; line-height: 1.2; }
 .book .when { margin: 10px 0 0; font-size: 19px; color: #6E6E73; }
@@ -49,3 +49,9 @@ footer a { color: #424245; text-decoration: none; }
 .msg.ok { color: #1D1D1F; font-weight: 600; font-size: 19px; }
 .msg.err { color: #BF4800; }
 .msg:empty { display: none; }
+
+/* line breaks: each sentence starts on its own line; long ones break only at natural pauses, never leaving one word alone */
+.l { display: block; }
+.nw { white-space: nowrap; }
+p, h1 { text-wrap: balance; }
+.sub, .book .when, .small { max-width: none; }
