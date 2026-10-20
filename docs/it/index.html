@@ -18,7 +18,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v=3">
 </head>
 <body>
 <a class="lang" href="/" hreflang="en" lang="en">English</a>
@@ -32,8 +32,8 @@
 <p class="when"><span class="l"><span class="nw">Il nuovo libro di Nicola Nuti,</span> <span class="nw">in eBook e in audiolibro</span> <span class="nw">letto dall'autore.</span></span><span class="l">Inizio 2027.</span></p>
 <form class="signup" action="https://oroboro-signup.fpugliano.workers.dev" method="post" data-ok="Grazie! Ti scriviamo quando esce Crumbs." data-err="Qualcosa non ha funzionato. Riprova, oppure scrivi a info@oroboropress.com." data-bad="Controlla l'indirizzo email.">
 <input type="hidden" name="lang" value="it"><input type="hidden" name="list" value="crumbs">
-<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-<label class="sr" for="email">Email</label>
+<input class="hp" hidden style="display:none" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="email">Email</label>
 <input id="email" type="email" name="email" required autocomplete="email" placeholder="nome@esempio.it">
 <button class="button" type="submit">Avvisami</button>
 </form>
@@ -42,6 +42,6 @@
 </section>
 </main>
 <footer><div><span>Copyright © 2026 Oroboro Press, San Francisco, California.</span><span>Contatti: <a href="mailto:info@oroboropress.com">info@oroboropress.com</a></span></div></footer>
-<script src="/js/signup.js"></script>
+<script src="/js/signup.js?v=3"></script>
 </body>
 </html>
