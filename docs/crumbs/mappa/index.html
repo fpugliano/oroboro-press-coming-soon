@@ -16,7 +16,7 @@
 /* Layout: map as the main sheet, a ledger of places beside it (stacked on phones). Pietra serena greys, the ocher of Oltrarno walls, the Arno in grey-green. */
 :root{
   --bg:#eceee9; --paper:#f7f8f4; --ink:#202729; --muted:#5d696a; --line:#cfd4cd;
-  --ocra:#a8741f; --ocra-soft:#e7d3ac; --arno:#9dbcbd; --wall:#a3aba5; --land:#e6e8e2; --park:#d3dcc9; --street:#a7afa9; --major:#7c8782; --rail:#8c7f94;
+  --ocra:#a8741f; --ocra-soft:#e7d3ac; --arno:#9dbcbd; --wall:#a3aba5; --land:#e6e8e2; --park:#d3dcc9; --hot:#e0362a; --hot-ink:#111111; --street:#a7afa9; --major:#7c8782; --rail:#8c7f94;
   --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --f-body:"Alegreya",Georgia,"Times New Roman",serif;
   --f-sc:"Alegreya SC","Alegreya",Georgia,serif;
@@ -24,10 +24,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#151a1b; --paper:#1d2425; --ink:#e5e8e3; --muted:#9aa6a5; --line:#323c3d;
-  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}}
+  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#151a1b; --paper:#1d2425; --ink:#e5e8e3; --muted:#9aa6a5; --line:#323c3d;
-  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}
+  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.5;margin:0}
 .wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:28px 40px}
@@ -82,6 +82,10 @@ svg .lm{font-size:calc(12px * var(--k,1))}
 svg .mk.esatto circle{fill:var(--ocra);stroke:var(--paper);stroke-width:1.5} svg .mk.esatto text{fill:var(--paper)}
 svg .mk.via circle{fill:var(--paper);stroke:var(--ocra);stroke-width:2.4} svg .mk.via text{fill:var(--ink)}
 svg .mk.zona circle{fill:var(--land);stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2.5 2.5} svg .mk.zona text{fill:var(--ink)}
+svg .mk.sel circle.dot{fill:var(--hot);stroke:var(--hot-ink);stroke-width:2.5;stroke-dasharray:none} svg .mk.sel text{fill:var(--hot-ink);font-weight:700}
+svg .mk circle.halo{fill:var(--hot);fill-opacity:.18;stroke:var(--hot);stroke-width:2;stroke-opacity:.9;stroke-dasharray:none}
+@media (prefers-reduced-motion:no-preference){svg .mk circle.halo{animation:pulse 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes pulse{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.4);opacity:0}}
 #map{touch-action:none;cursor:grab}
 #map:active{cursor:grabbing}
 .zoom{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px}
@@ -313,9 +317,10 @@ function drawMap(){
   order.sort((a,b)=>(a.id===state.sel)-(b.id===state.sel));
   for(const p of order){
     const on=!ids||ids.includes(p.id), sel=p.id===state.sel, [x,y]=f(v,p.lat,p.lon);
-    const g=el("g",{class:`mk ${p.p}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:on?1:.3},svg);
-    const r=((svg.clientWidth||1000)<600?7.5:(state.view==="centro"?10:9))*(sel?1.35:1)*k;
-    el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:r.toFixed(2),"vector-effect":"non-scaling-stroke"},g);
+    const g=el("g",{class:`mk ${p.p}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:(on||sel)?1:.3},svg);
+    const r=((svg.clientWidth||1000)<600?7.5:(state.view==="centro"?10:9))*(sel?1.6:1)*k;
+    if(sel){el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*2.3).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke"},g);el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*1.6).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke",style:"animation-delay:.8s"},g)}
+    el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:r.toFixed(2),class:"dot","vector-effect":"non-scaling-stroke"},g);
     const t=el("text",{x:x.toFixed(1),y:(y+r*0.36).toFixed(1),"text-anchor":"middle","font-size":(r*1.0).toFixed(2)},g);
     t.textContent=p.i;
     g.addEventListener("click",e=>{e.stopPropagation();select(p.id)});
@@ -331,7 +336,7 @@ function drawLedger(){
     const b=document.createElement("button");b.className="place";b.type="button";
     if(p.id===state.sel)b.setAttribute("aria-current","true");
     b.innerHTML=`<span class="n">${String(p.i).padStart(2,"0")}</span><span><span class="t">${p.t}</span><span class="a">${addrText(p)}</span></span>`;
-    b.addEventListener("click",()=>select(p.id,true));
+    b.addEventListener("click",()=>{select(p.id,true);if(innerWidth<860){try{svg.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}catch(e){}}});
     box.appendChild(b);
   }
 }
