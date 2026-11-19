@@ -16,7 +16,7 @@
 /* Layout: map as the main sheet, a ledger of places beside it (stacked on phones). Pietra serena greys, the ocher of Oltrarno walls, the Arno in grey-green. */
 :root{
   --bg:#eceee9; --paper:#f7f8f4; --ink:#202729; --muted:#5d696a; --line:#cfd4cd;
-  --ocra:#a8741f; --ocra-soft:#e7d3ac; --arno:#9dbcbd; --wall:#a3aba5; --land:#e6e8e2; --park:#d3dcc9; --hot:#e0362a; --hot-ink:#111111; --street:#a7afa9; --major:#7c8782; --rail:#8c7f94;
+  --ocra:#a8741f; --ocra-soft:#e7d3ac; --arno:#9dbcbd; --wall:#a3aba5; --land:#e6e8e2; --park:#d3dcc9; --hot:#e0362a; --hot-ink:#111111; --ask:#1f5fd6; --ask-ink:#ffffff; --street:#a7afa9; --major:#7c8782; --rail:#8c7f94;
   --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --f-body:"Alegreya",Georgia,"Times New Roman",serif;
   --f-sc:"Alegreya SC","Alegreya",Georgia,serif;
@@ -24,10 +24,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#151a1b; --paper:#1d2425; --ink:#e5e8e3; --muted:#9aa6a5; --line:#323c3d;
-  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}}
+  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --ask:#6b9dff; --ask-ink:#0b1420; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#151a1b; --paper:#1d2425; --ink:#e5e8e3; --muted:#9aa6a5; --line:#323c3d;
-  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}
+  --ocra:#dba94e; --ocra-soft:#4a3a1c; --arno:#2f5153; --wall:#4d595a; --land:#1a2021; --park:#1f2b22; --hot:#ff4f3f; --hot-ink:#111111; --ask:#6b9dff; --ask-ink:#0b1420; --street:#3c4748; --major:#5d6a6b; --rail:#5f5468; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.5;margin:0}
 .wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:28px 40px}
@@ -54,7 +54,7 @@ button.chip:focus-visible,.place:focus-visible,svg .mk:focus-visible{outline:2px
 .detail .story{font-family:var(--f-sc);letter-spacing:.06em;font-size:14px;color:var(--ocra);text-transform:lowercase}
 .detail h2{font-family:var(--f-display);font-weight:500;font-size:1.5rem;margin:.1rem 0 .3rem;line-height:1.15;text-wrap:balance}
 .addr{font-family:var(--f-mono);font-size:13.5px;color:var(--ink)}
-.addr .todo{color:var(--ocra)}
+.addr .todo,.place .todo{color:var(--ask);font-weight:500}
 .detail blockquote{margin:.6rem 0 0;font-style:italic;color:var(--ink);border-left:2px solid var(--ocra-soft);padding-left:12px;max-width:62ch}
 .detail .note{font-size:14px;color:var(--muted);margin:.5rem 0 0}
 .detail .body{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
@@ -90,6 +90,7 @@ svg .lm{font-size:calc(12px * var(--k,1))}
 svg .mk.esatto circle{fill:var(--ocra);stroke:var(--paper);stroke-width:1.5} svg .mk.esatto text{fill:var(--paper)}
 svg .mk.via circle{fill:var(--paper);stroke:var(--ocra);stroke-width:2.4} svg .mk.via text{fill:var(--ink)}
 svg .mk.zona circle{fill:var(--land);stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2.5 2.5} svg .mk.zona text{fill:var(--ink)}
+svg .mk.ask circle.dot{fill:var(--ask);stroke:var(--paper);stroke-width:2} svg .mk.ask text{fill:var(--ask-ink);font-weight:700}
 svg .mk.sel circle.dot{fill:var(--hot);stroke:var(--hot-ink);stroke-width:2.5;stroke-dasharray:none} svg .mk.sel text{fill:var(--hot-ink);font-weight:700}
 svg .mk circle.halo{fill:var(--hot);fill-opacity:.18;stroke:var(--hot);stroke-width:2;stroke-opacity:.9;stroke-dasharray:none}
 @media (prefers-reduced-motion:no-preference){svg .mk circle.halo{animation:pulse 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}}
@@ -131,7 +132,7 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
       <div class="mapbox"><svg id="map" role="img" aria-label="Mappa di Firenze con i luoghi di Crumbs"></svg><div class="zoom"><button type="button" id="zin" aria-label="Avvicina">+</button><button type="button" id="zout" aria-label="Allontana">−</button><button type="button" id="zreset" aria-label="Vista intera">⤢</button></div><div class="osm">© OpenStreetMap contributors</div></div>
       <div class="legend">
         <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" style="fill:var(--ocra)"/></svg>indirizzo preciso</span>
-        <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" style="fill:var(--paper);stroke:var(--ocra)" stroke-width="2"/></svg>la via, manca il civico</span>
+        <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" style="fill:var(--ask)"/></svg><b style="color:var(--ask);font-weight:500">manca il civico: da chiedere</b></span>
         <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="2 2"/></svg>la zona</span>
         <span><svg width="22" height="10" viewBox="0 0 22 10"><path d="M1 5h20" style="stroke:var(--ocra)" stroke-width="2.5" stroke-dasharray="1 5" stroke-linecap="round"/></svg>itinerario, in linea d'aria</span>
       </div>
@@ -150,7 +151,7 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
     </aside>
   </div>
 
-  <footer>Bozza di lavoro di Oroboro Press, novembre 2026. Mappa: dati © OpenStreetMap contributors (ODbL). Foto di prova da Wikimedia Commons, con autore e licenza sotto ogni foto. Le vie e i monumenti sono posizionati sui dati reali; dove manca il civico, il punto è a metà della via. Gli itinerari sono in linea d'aria. I civici in arancio sono da chiedere o da verificare.</footer>
+  <footer>Bozza di lavoro di Oroboro Press, novembre 2026. Mappa: dati © OpenStreetMap contributors (ODbL). Foto di prova da Wikimedia Commons, con autore e licenza sotto ogni foto. Le vie e i monumenti sono posizionati sui dati reali; dove manca il civico, il punto è a metà della via. Gli itinerari sono in linea d'aria. I civici in blu sono da chiedere o da verificare.</footer>
 </div>
 
 <script>
@@ -327,7 +328,7 @@ function drawMap(){
   order.sort((a,b)=>(a.id===state.sel)-(b.id===state.sel));
   for(const p of order){
     const on=!ids||ids.includes(p.id), sel=p.id===state.sel, [x,y]=f(v,p.lat,p.lon);
-    const g=el("g",{class:`mk ${p.p}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:(on||sel)?1:.3},svg);
+    const g=el("g",{class:`mk ${p.p}${p.num===null?" ask":""}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:(on||sel)?1:.3},svg);
     const r=((svg.clientWidth||1000)<600?7.5:(state.view==="centro"?10:9))*(sel?1.6:1)*k;
     if(sel){el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*2.3).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke"},g);el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*1.6).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke",style:"animation-delay:.8s"},g)}
     el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:r.toFixed(2),class:"dot","vector-effect":"non-scaling-stroke"},g);
@@ -375,7 +376,7 @@ function drawLists(){
   document.getElementById("todo").innerHTML=TODO.map(li).join("");
   document.getElementById("far").innerHTML=FAR.map(li).join("");
   const total=PLACES.length, ask=PLACES.filter(p=>p.num===null).length;
-  document.getElementById("stats").innerHTML=`Bozza · ${total} luoghi sulla mappa · <b>${ask}</b> civici da chiedere a Nicola · ${TODO.length} luoghi da localizzare`;
+  document.getElementById("stats").innerHTML=`Bozza · ${total} luoghi sulla mappa · <b style="color:var(--ask)">${ask}</b> civici da chiedere a Nicola · ${TODO.length} luoghi da localizzare`;
 }
 function render(){drawMap();drawLedger();drawDetail()}
 function zoomBy(k,px,py){
