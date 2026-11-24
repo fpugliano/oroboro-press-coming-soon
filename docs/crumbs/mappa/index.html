@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="I luoghi di Crumbs di Nicola Nuti sulla mappa di Firenze. Bozza di lavoro.">
+<meta name="description" content="I luoghi di Crumbs di Nicola Nuti sulla mappa di Firenze. Con le frasi del libro e le foto di come sono oggi.">
 <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -107,6 +107,23 @@ svg .mk circle.halo{fill:var(--hot);fill-opacity:.18;stroke:var(--hot);stroke-wi
 svg .mk{cursor:pointer}
 svg .mk text{font-family:var(--f-mono);font-weight:500;pointer-events:none}
 @media (prefers-reduced-motion:no-preference){svg .mk circle{transition:r .15s ease}}
+.join{margin-top:20px;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:12px 28px;align-items:center}
+@media (max-width:760px){.join{grid-template-columns:minmax(0,1fr)}}
+.join h2{font-family:var(--f-display);font-weight:500;font-size:1.45rem;line-height:1.15;margin:0 0 .25rem;text-wrap:balance}
+.join h2 em{color:var(--ocra)}
+.join p{margin:0;color:var(--muted);font-size:15.5px}
+.join form{display:flex;flex-wrap:wrap;gap:8px}
+.join input[type=email]{flex:1 1 200px;min-width:0;font:inherit;font-size:16px;padding:8px 12px;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink)}
+.join button{font:inherit;font-size:16px;padding:8px 18px;border:0;border-radius:3px;background:var(--ink);color:var(--paper);cursor:pointer}
+.join button:disabled{opacity:.6;cursor:default}
+.join input:focus-visible,.join button:focus-visible{outline:2px solid var(--ocra);outline-offset:2px}
+.join .msg{min-height:0;margin-top:6px;font-size:15px;color:var(--ink)}
+.join .msg.err{color:var(--hot)}
+.join .small{font-size:13px;margin-top:6px}
+.join .l{display:block}
+.join .nw{white-space:nowrap}
+.reader .work{display:none!important}
+html:not(.reader) .readonly{display:none!important}
 footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
 </style>
 
@@ -118,7 +135,7 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
       <h1>La Firenze di <em>Crumbs</em></h1>
       <p class="sub">I luoghi dei ricordi di Nicola Nuti, racconto per racconto: dall'Oltrarno di <i>Giottino</i> alle gallerie, ai caffè, alle colline degli artisti.</p>
     </div>
-    <div class="draft" id="stats">Bozza</div>
+    <div class="draft work" id="stats">Bozza</div>
   </header>
 
   <div class="controls">
@@ -133,7 +150,8 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
       <div class="mapbox"><svg id="map" role="img" aria-label="Mappa di Firenze con i luoghi di Crumbs"></svg><div class="zoom"><button type="button" id="zin" aria-label="Avvicina">+</button><button type="button" id="zout" aria-label="Allontana">−</button><button type="button" id="zreset" aria-label="Vista intera">⤢</button></div><div class="osm">© OpenStreetMap contributors</div></div>
       <div class="legend">
         <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" style="fill:var(--ocra)"/></svg>indirizzo preciso</span>
-        <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" style="fill:var(--ask)"/></svg><b style="color:var(--ask);font-weight:500">manca il civico: da chiedere</b></span>
+        <span class="readonly"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" style="fill:var(--paper);stroke:var(--ocra)" stroke-width="2"/></svg>la via, senza numero</span>
+        <span class="work"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" style="fill:var(--ask)"/></svg><b style="color:var(--ask);font-weight:500">manca il civico: da chiedere</b></span>
         <span><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="2 2"/></svg>la zona</span>
         <span><svg width="22" height="10" viewBox="0 0 22 10"><path d="M1 5h20" style="stroke:var(--ocra)" stroke-width="2.5" stroke-dasharray="1 5" stroke-linecap="round"/></svg>itinerario, in linea d'aria</span>
       </div>
@@ -141,7 +159,7 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
     </div>
     <aside>
       <div class="ledger" id="ledger"></div>
-      <div class="offmap">
+      <div class="offmap work">
         <h3>da localizzare</h3>
         <ul id="todo"></ul>
       </div>
@@ -152,10 +170,32 @@ footer{margin-top:18px;font-size:14px;color:var(--muted);max-width:75ch}
     </aside>
   </div>
 
-  <footer>Bozza di lavoro di Oroboro Press, novembre 2026. Mappa: dati © OpenStreetMap contributors (ODbL). Foto di Nicola Nuti; le altre, di prova, da Wikimedia Commons, con autore e licenza sotto ogni foto. Le vie e i monumenti sono posizionati sui dati reali; dove manca il civico, il punto è a metà della via. Gli itinerari sono in linea d'aria. I civici in blu sono da chiedere o da verificare.</footer>
+  <section class="join readonly" aria-labelledby="join-h">
+    <div>
+      <h2 id="join-h"><em>Crumbs</em> esce a gennaio del 2027</h2>
+      <p><span class="l">Il libro di ricordi di Nicola Nuti, <span class="nw">in eBook e in audiolibro letto dall'autore.</span></span> <span class="l">Lascia la tua email <span class="nw">e ti avvisiamo quando esce.</span></span></p>
+    </div>
+    <div>
+      <form id="signup" action="https://oroboro-signup.fpugliano.workers.dev" method="post">
+        <input type="hidden" name="lang" value="it"><input type="hidden" name="list" value="crumbs">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" hidden>
+        <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Email</label>
+        <input id="email" type="email" name="email" required autocomplete="email" placeholder="nome@esempio.it">
+        <button type="submit">Avvisami</button>
+      </form>
+      <p class="msg" id="signup-msg" role="status" aria-live="polite"></p>
+      <p class="small"><span class="l">Ti scriveremo una volta sola, <span class="nw">quando uscirà il libro.</span></span> <span class="l">E non daremo il tuo indirizzo email <span class="nw">a nessuno.</span></span></p>
+    </div>
+  </section>
+  <footer class="work">Bozza di lavoro di Oroboro Press, novembre 2026. Mappa: dati © OpenStreetMap contributors (ODbL). Foto di Nicola Nuti; le altre, di prova, da Wikimedia Commons, con autore e licenza sotto ogni foto. Le vie e i monumenti sono posizionati sui dati reali; dove manca il civico, il punto è a metà della via. Gli itinerari sono in linea d'aria. I civici in blu sono da chiedere o da verificare.</footer>
+  <footer class="readonly"><a href="/it/" style="color:inherit">Oroboro Press</a>, 2026. Mappa: dati © OpenStreetMap contributors (ODbL). Foto di Nicola Nuti, tranne dove indicato: le altre vengono da Wikimedia Commons, con autore e licenza sotto ogni foto. Dove il libro nomina solo la via, il punto è a metà della via. Gli itinerari sono in linea d'aria.</footer>
 </div>
 
 <script>
+// Due versioni: "lavoro" (con i civici da chiedere, per Francesco e Nicola) e "lettore" (per il pubblico). Sul sito il default è "lettore"; ?lavoro mostra l'altra.
+const MODE_DEFAULT = "lettore";
+const WORK = /[?&]lavoro\b/.test(location.search) || (MODE_DEFAULT==="lavoro" && !/[?&]lettore\b/.test(location.search));
+document.documentElement.classList.toggle("reader", !WORK);
 const PLACES = [
  // Giottino
  {id:"casa", s:"Giottino", t:"La casa di Nicola bambino", a:"Via Guicciardini", num:"9", lat:43.76693, lon:11.25184, p:"esatto",
@@ -283,6 +323,7 @@ function inView(p,v){return p.lat>=v.latMin&&p.lat<=v.latMax&&p.lon>=v.lonMin&&p
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 function routeIds(){return ROUTES.find(r=>r.id===state.route).ids}
 function addrText(p){
+  if(!WORK) return p.num ? `${p.a} ${p.num}` : p.a;
   if(p.num===null) return `${p.a}, <span class="todo">civico ${p.numCheck?"da verificare":"da chiedere"}</span>`;
   if(p.num==="") return p.a;
   return `${p.a} ${p.num}${p.numCheck?' <span class="todo">(da verificare)</span>':''}`;
@@ -329,7 +370,7 @@ function drawMap(){
   order.sort((a,b)=>(a.id===state.sel)-(b.id===state.sel));
   for(const p of order){
     const on=!ids||ids.includes(p.id), sel=p.id===state.sel, [x,y]=f(v,p.lat,p.lon);
-    const g=el("g",{class:`mk ${p.p}${p.num===null?" ask":""}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:(on||sel)?1:.3},svg);
+    const g=el("g",{class:`mk ${p.p}${WORK&&p.num===null?" ask":""}${sel?" sel":""}`,tabindex:0,role:"button","aria-label":`${p.i}. ${p.t}`,opacity:(on||sel)?1:.3},svg);
     const r=((svg.clientWidth||1000)<600?7.5:(state.view==="centro"?10:9))*(sel?1.6:1)*k;
     if(sel){el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*2.3).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke"},g);el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:(r*1.6).toFixed(2),class:"halo","vector-effect":"non-scaling-stroke",style:"animation-delay:.8s"},g)}
     el("circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:r.toFixed(2),class:"dot","vector-effect":"non-scaling-stroke"},g);
@@ -355,11 +396,11 @@ function drawLedger(){
 function drawDetail(){
   const d=document.getElementById("detail"), p=state.sel&&byId[state.sel];
   if(!p){d.classList.remove("has-photo");d.innerHTML=`<div class="story">come si usa</div><h2>Tocca un numero sulla mappa</h2><p class="note">Ogni luogo porta con sé la frase del racconto in cui compare. Trascina per spostarti, usa + e − per avvicinarti: da vicino compaiono i nomi delle strade.</p>`;return}
-  const prec=p.pn||{esatto:"Indirizzo preciso.",via:"Sappiamo la via: manca il numero civico.",zona:"Sappiamo solo la zona."}[p.p];
+  const prec=p.pn||(WORK?{esatto:"Indirizzo preciso.",via:"Sappiamo la via: manca il numero civico.",zona:"Sappiamo solo la zona."}:{esatto:"",via:"Il libro nomina la via: il punto è a metà della via.",zona:"Il punto indica la zona."})[p.p];
   const ph=PHOTOS[p.id], esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const fig=ph?`<figure><img src="${ph.src}" alt="${esc(p.t)}, oggi" loading="lazy"><figcaption>${ph.own?`<span class="cap">${esc(ph.cap)}</span> Foto di Nicola Nuti, 2026.`:`Foto: <a href="${ph.page}" target="_blank" rel="noopener">${esc(ph.by)}</a>, <a href="${ph.licUrl}" target="_blank" rel="noopener">${esc(ph.lic)}</a>, Wikimedia Commons<div class="trial">foto di prova</div>`}</figcaption></figure>`:"";
+  const fig=ph?`<figure><img src="${ph.src}" alt="${esc(p.t)}, oggi" loading="lazy"><figcaption>${ph.own?`<span class="cap">${esc(ph.cap)}</span> Foto di Nicola Nuti, 2026.`:`Foto: <a href="${ph.page}" target="_blank" rel="noopener">${esc(ph.by)}</a>, <a href="${ph.licUrl}" target="_blank" rel="noopener">${esc(ph.lic)}</a>, Wikimedia Commons${WORK?'<div class="trial">foto di prova</div>':""}`}</figcaption></figure>`:"";
   d.classList.toggle("has-photo",!!ph);
-  d.innerHTML=`<div class="body">${fig}<div><div class="story">${p.s}</div><h2>${p.t}</h2><div class="addr">${addrText(p)}</div><blockquote>${p.q}</blockquote>${p.n?`<p class="note">${p.n}</p>`:""}<p class="note">${prec}</p></div></div>`;
+  d.innerHTML=`<div class="body">${fig}<div><div class="story">${p.s}</div><h2>${p.t}</h2><div class="addr">${addrText(p)}</div><blockquote>${p.q}</blockquote>${p.n?`<p class="note">${p.n}</p>`:""}${prec?`<p class="note">${prec}</p>`:""}</div></div>`;
 }
 function select(id,focus){
   state.sel=id; const p=byId[id];
@@ -397,6 +438,14 @@ svg.addEventListener("pointermove",e=>{if(!drag)return;const r=svg.getBoundingCl
 svg.addEventListener("pointerup",()=>{drag=null});
 svg.addEventListener("pointercancel",()=>{drag=null});
 drawChips();drawLists();render();
+const form=document.getElementById("signup"), msg=document.getElementById("signup-msg");
+form.addEventListener("submit",e=>{
+  e.preventDefault(); const b=form.querySelector("button"); b.disabled=true;
+  const err=t=>{msg.textContent=t;msg.className="msg err";b.disabled=false};
+  fetch(form.action,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(form)))})
+    .then(r=>r.json()).then(j=>{if(j.ok){form.hidden=true;msg.textContent="Grazie! Ti avviseremo appena uscirà Crumbs.";msg.className="msg"}else err(j.error==="invalid_email"?"Controlla l'indirizzo email.":"Qualcosa non ha funzionato. Riprova, oppure scrivi a info@oroboropress.com.")})
+    .catch(()=>err("Qualcosa non ha funzionato. Riprova, oppure scrivi a info@oroboropress.com."));
+});
 let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(drawMap,150)});
 
 </script>
