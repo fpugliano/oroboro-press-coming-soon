@@ -67,11 +67,12 @@ button.chip:focus-visible,.place:focus-visible,svg .mk:focus-visible{outline:2px
 .detail figcaption .cap{display:block;font-style:italic;color:var(--ink);font-size:13px;margin-bottom:2px}
 .detail .trial{font-family:var(--f-mono);font-size:11px;color:var(--ocra);margin-top:3px}
 aside{display:flex;flex-direction:column;gap:14px;min-width:0}
-.ledger{background:var(--paper);border:1px solid var(--line);border-radius:4px;max-height:840px;overflow:auto}
+.ledger{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:4px;max-height:840px;overflow:auto}
 .ledger h3{font-family:var(--f-sc);font-weight:500;font-size:14px;letter-spacing:.07em;text-transform:lowercase;color:var(--muted);margin:0;padding:12px 16px 4px;position:sticky;top:0;background:var(--paper)}
 .place{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-top:1px solid var(--line);padding:9px 16px;cursor:pointer}
 .place:hover{background:var(--bg)}
-.place[aria-current="true"]{background:var(--ocra-soft)}
+.place[aria-current="true"]{background:var(--ocra-soft);box-shadow:inset 4px 0 0 var(--ocra)}
+.place[aria-current="true"] .n{color:var(--ink);font-weight:500}
 .place .n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
 .place .t{font-size:16px;line-height:1.3}
 .place .a{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:2px}
@@ -391,6 +392,13 @@ function drawLedger(){
     b.innerHTML=`<span class="n">${String(p.i).padStart(2,"0")}</span><span><span class="t">${p.t}</span><span class="a">${addrText(p)}</span></span>`;
     b.addEventListener("click",()=>{select(p.id,true);if(innerWidth<860){try{svg.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}catch(e){}}});
     box.appendChild(b);
+  }
+  // Porta in vista il luogo scelto, scorrendo solo l'elenco (non la pagina).
+  const cur=box.querySelector('.place[aria-current="true"]');
+  if(cur&&box.scrollHeight>box.clientHeight){
+    const prev=cur.previousElementSibling, stick=box.querySelector("h3")?box.querySelector("h3").offsetHeight:0;
+    const top=prev&&prev.tagName==="H3"?prev.offsetTop:cur.offsetTop-stick, bottom=cur.offsetTop+cur.offsetHeight;
+    if(top<box.scrollTop||bottom>box.scrollTop+box.clientHeight) box.scrollTop=Math.max(0,top);
   }
 }
 function drawDetail(){
