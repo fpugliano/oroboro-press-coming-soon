@@ -294,8 +294,8 @@ const TODO = [
   ["La casa e la terrazza di Mario Cini", "Mario Cini", "In casa aveva un piccolo studio"],
 ];
 const FAR = [
-  ["La casa di Mario Fallani, verso San Donato", "Il mistero dei cipressi", "la superstrada attraverso la splendida campagna intorno a San Donato"],
-  ["Sesto Fiorentino", "Giottino", "Viale Europa, <span style=\"white-space:nowrap\">Rifredi, Sesto</span>"],
+  ["La casa di Mario Fallani, verso San Donato", "Il mistero dei cipressi", "la superstrada attraverso la splendida campagna <span style=\"white-space:nowrap\">intorno a San Donato</span>"],
+  ["Dove andarono gli amici: Sesto Fiorentino", "Giottino", "Viale Europa, <span style=\"white-space:nowrap\">Rifredi, Sesto</span>"],
   ["Viareggio, Milano, Città del Messico, il mare", "vari racconti", "fuori Firenze: restano nel libro, <span style=\"white-space:nowrap\">non sulla mappa</span>"],
 ];
 
@@ -422,7 +422,7 @@ function drawChips(){
   for(const k in VIEWS){const b=document.createElement("button");b.className="chip";b.type="button";b.id="view-"+k;b.textContent=VIEWS[k].name;b.setAttribute("aria-pressed",state.view===k);b.addEventListener("click",()=>{state.view=k;state.z=1;state.cx=null;drawChips();render()});v.appendChild(b)}
 }
 function drawLists(){
-  const li=a=>`<li>${a[0]} <span class="q">(${a[1]}): ${a[2]}</span></li>`;
+  const li=a=>`<li>${a[0]} <span class="q">(${a[1]==="vari racconti"?a[1]:`racconto <i>${a[1]}</i>`}): ${a[2]}</span></li>`;
   document.getElementById("todo").innerHTML=TODO.map(li).join("");
   document.getElementById("far").innerHTML=FAR.map(li).join("");
   const total=PLACES.length, ask=PLACES.filter(p=>p.num===null).length;
